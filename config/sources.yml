@@ -15,6 +15,7 @@ sources:
     kind: rss
     category: regulation_institutions
     quality: 96
+    language: en
     url: https://www.eba.europa.eu/news-press/news/rss.xml
     enabled: true
 
@@ -23,6 +24,7 @@ sources:
     kind: rss
     category: regulation_institutions
     quality: 95
+    language: en
     url: https://www.ecb.europa.eu/rss/press.html
     enabled: true
 
@@ -31,6 +33,7 @@ sources:
     kind: scrape
     category: assurance
     quality: 96
+    language: en
     url: https://www.eiopa.europa.eu/media_en
     enabled: true
     require_url_contains:
@@ -62,6 +65,7 @@ sources:
     kind: scrape
     category: regulation_institutions
     quality: 95
+    language: en
     url: https://www.esma.europa.eu/press-news/esma-news
     enabled: true
     require_url_contains:
@@ -92,6 +96,7 @@ sources:
     kind: scrape
     category: finance_markets
     quality: 88
+    language: en
     url: https://www.imf.org/en/news
     enabled: true
     require_url_contains:
@@ -117,26 +122,38 @@ sources:
     summary_selectors:
       - p
 
-  - id: google_insurance
-    name: Google News – assurance
+  - id: google_assurance_fr
+    name: Google News – assurance FR
     kind: rss
     category: assurance
-    quality: 62
-    url: https://news.google.com/rss/search?q=(insurance%20OR%20insurtech%20OR%20reinsurance%20OR%20%22Solvency%20II%22)%20when:3d&hl=en-US&gl=US&ceid=US:en
+    quality: 66
+    language: fr
+    url: "https://news.google.com/rss/search?q=(assurance%20OR%20assureur%20OR%20assureurs%20OR%20r%C3%A9assurance%20OR%20insurtech%20OR%20%22Solvabilit%C3%A9%20II%22)%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
     enabled: true
 
-  - id: google_finance_reg
-    name: Google News – finance et régulation
+  - id: google_banque_finance_fr
+    name: Google News – banque / finance FR
     kind: rss
     category: finance_markets
-    quality: 64
-    url: https://news.google.com/rss/search?q=(banking%20regulation%20OR%20asset%20management%20OR%20fintech%20OR%20financial%20compliance%20OR%20financial%20fraud%20OR%20financial%20cybersecurity)%20when:3d&hl=en-US&gl=US&ceid=US:en
+    quality: 66
+    language: fr
+    url: "https://news.google.com/rss/search?q=(banque%20OR%20banques%20OR%20finance%20OR%20%C3%A9pargne%20OR%20gestion%20d%27actifs%20OR%20fintech%20OR%20march%C3%A9s%20financiers)%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
     enabled: true
 
-  - id: google_geopolitics_impact
-    name: Google News – géopolitique à impact
+  - id: google_regulation_financiere_fr
+    name: Google News – réglementation financière FR
+    kind: rss
+    category: regulation_institutions
+    quality: 68
+    language: fr
+    url: "https://news.google.com/rss/search?q=(r%C3%A9glementation%20financi%C3%A8re%20OR%20conformit%C3%A9%20financi%C3%A8re%20OR%20fraude%20financi%C3%A8re%20OR%20cybers%C3%A9curit%C3%A9%20financi%C3%A8re%20OR%20DORA%20OR%20LCB-FT%20OR%20%22lutte%20contre%20le%20blanchiment%22)%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
+    enabled: true
+
+  - id: google_geopolitique_impact_fr
+    name: Google News – géopolitique à impact FR
     kind: rss
     category: geopolitique_major
-    quality: 58
-    url: https://news.google.com/rss/search?q=((sanctions%20OR%20tariffs%20OR%20oil%20OR%20gas%20OR%20shipping%20OR%20energy)%20AND%20(finance%20OR%20insurance%20OR%20markets%20OR%20trade))%20when:3d&hl=en-US&gl=US&ceid=US:en
+    quality: 60
+    language: fr
+    url: "https://news.google.com/rss/search?q=((sanctions%20OR%20droits%20de%20douane%20OR%20p%C3%A9trole%20OR%20gaz%20OR%20%C3%A9nergie%20OR%20transport%20maritime%20OR%20risque%20pays)%20AND%20(finance%20OR%20assurance%20OR%20march%C3%A9s%20OR%20commerce))%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
     enabled: true
