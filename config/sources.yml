@@ -1,0 +1,142 @@
+settings:
+  freshness_hours: 72
+  max_articles_per_day: 18
+  top_n: 5
+  min_score: 45
+  timeout_seconds: 20
+  history_file: data/seen_articles.jsonl
+  state_file: data/state.json
+  site_dir: site
+  base_url: ""
+
+sources:
+  - id: eba
+    name: European Banking Authority
+    kind: rss
+    category: regulation_institutions
+    quality: 96
+    url: https://www.eba.europa.eu/news-press/news/rss.xml
+    enabled: true
+
+  - id: ecb
+    name: European Central Bank
+    kind: rss
+    category: regulation_institutions
+    quality: 95
+    url: https://www.ecb.europa.eu/rss/press.html
+    enabled: true
+
+  - id: eiopa
+    name: EIOPA Media
+    kind: scrape
+    category: assurance
+    quality: 96
+    url: https://www.eiopa.europa.eu/media_en
+    enabled: true
+    require_url_contains:
+      - /20
+      - _en
+    item_selectors:
+      - main article
+      - .view-content .views-row
+      - .node--type-news
+      - article
+    title_selectors:
+      - h3 a
+      - h2 a
+      - a
+    link_selectors:
+      - h3 a
+      - h2 a
+      - a
+    date_selectors:
+      - time
+      - .date
+      - .field--name-field-publication-date
+      - span
+    summary_selectors:
+      - p
+
+  - id: esma
+    name: ESMA News
+    kind: scrape
+    category: regulation_institutions
+    quality: 95
+    url: https://www.esma.europa.eu/press-news/esma-news
+    enabled: true
+    require_url_contains:
+      - /press-news/esma-news/
+    item_selectors:
+      - main article
+      - .view-content .views-row
+      - .search-results__item
+      - article
+    title_selectors:
+      - h3 a
+      - h2 a
+      - a
+    link_selectors:
+      - h3 a
+      - h2 a
+      - a
+    date_selectors:
+      - time
+      - .date-display-single
+      - .field--name-field-publication-date
+      - .date
+    summary_selectors:
+      - p
+
+  - id: imf
+    name: IMF News
+    kind: scrape
+    category: finance_markets
+    quality: 88
+    url: https://www.imf.org/en/news
+    enabled: true
+    require_url_contains:
+      - /en/News/
+    item_selectors:
+      - main article
+      - .imf-listing-item
+      - .coveo-result-frame
+      - article
+    title_selectors:
+      - h3 a
+      - h2 a
+      - a
+    link_selectors:
+      - h3 a
+      - h2 a
+      - a
+    date_selectors:
+      - time
+      - .imf-date
+      - .news-date
+      - .date
+    summary_selectors:
+      - p
+
+  - id: google_insurance
+    name: Google News – assurance
+    kind: rss
+    category: assurance
+    quality: 62
+    url: https://news.google.com/rss/search?q=(insurance%20OR%20insurtech%20OR%20reinsurance%20OR%20%22Solvency%20II%22)%20when:3d&hl=en-US&gl=US&ceid=US:en
+    enabled: true
+
+  - id: google_finance_reg
+    name: Google News – finance et régulation
+    kind: rss
+    category: finance_markets
+    quality: 64
+    url: https://news.google.com/rss/search?q=(banking%20regulation%20OR%20asset%20management%20OR%20fintech%20OR%20financial%20compliance%20OR%20financial%20fraud%20OR%20financial%20cybersecurity)%20when:3d&hl=en-US&gl=US&ceid=US:en
+    enabled: true
+
+  - id: google_geopolitics_impact
+    name: Google News – géopolitique à impact
+    kind: rss
+    category: geopolitique_major
+    quality: 58
+    url: https://news.google.com/rss/search?q=((sanctions%20OR%20tariffs%20OR%20oil%20OR%20gas%20OR%20shipping%20OR%20energy)%20AND%20(finance%20OR%20insurance%20OR%20markets%20OR%20trade))%20when:3d&hl=en-US&gl=US&ceid=US:en
+    enabled: true

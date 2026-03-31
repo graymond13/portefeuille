@@ -1,0 +1,68 @@
+name: Daily veille
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '15 5 * * *'
+
+concurrency:
+  group: veille-daily
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily pipeline
+        run: python main.py --log-level INFO
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Commit persistent state and generated site
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase --autostash origin "${GITHUB_REF_NAME}" || true
+          if git diff --quiet -- data site; then
+            echo "No changes to commit"
+          else
+            git add data site
+            git commit -m "chore(veille): update $(date -u +%F)"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
