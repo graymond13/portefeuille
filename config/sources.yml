@@ -1,7 +1,7 @@
 settings:
-  freshness_hours: 120
-  max_articles_per_day: 18
-  top_n: 10
+  freshness_hours: 168
+  max_articles_per_day: 40
+  top_n: 20
   min_score: 50
   timeout_seconds: 20
   history_file: data/seen_articles.jsonl
@@ -10,94 +10,223 @@ settings:
   base_url: ""
 
 sources:
-  - id: fund_msci_world
-    name: Core MSCI World USD (Acc)
+  # =========================
+  # MSCI WORLD
+  # =========================
+  - id: fund_msci_world_exact
+    name: Core MSCI World USD (Acc) - exact
     kind: rss
     category: portfolio_funds
-    quality: 86
+    quality: 88
     language: en
-    url: "https://news.google.com/rss/search?q=((%22MSCI%20World%22%20OR%20%22Core%20MSCI%20World%22)%20AND%20(ETF%20OR%20tracker%20OR%20fund%20OR%20index%20OR%20holdings%20OR%20allocation))%20-football%20-soccer%20-NBA%20-NFL%20when:7d&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=%22Core%20MSCI%20World%20USD%20(Acc)%22%20OR%20%22iShares%20Core%20MSCI%20World%20UCITS%20ETF%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
     enabled: true
 
-  - id: fund_msci_europe
-    name: Core MSCI Europe EUR (Acc)
+  - id: fund_msci_world_index
+    name: MSCI World - index
     kind: rss
     category: portfolio_funds
-    quality: 85
+    quality: 82
     language: en
-    url: "https://news.google.com/rss/search?q=((%22MSCI%20Europe%22%20OR%20%22Core%20MSCI%20Europe%22)%20AND%20(ETF%20OR%20tracker%20OR%20fund%20OR%20index%20OR%20holdings%20OR%20allocation))%20-football%20-soccer%20when:7d&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=%22MSCI%20World%22%20ETF%20OR%20index%20OR%20tracker%20when:10d&hl=en-US&gl=US&ceid=US:en"
     enabled: true
 
-  - id: fund_sp500
-    name: Core S&P 500 USD (Acc)
+  # =========================
+  # MSCI EUROPE
+  # =========================
+  - id: fund_msci_europe_exact
+    name: Core MSCI Europe EUR (Acc) - exact
     kind: rss
     category: portfolio_funds
-    quality: 86
+    quality: 88
     language: en
-    url: "https://news.google.com/rss/search?q=((%22S%26P%20500%22%20OR%20%22Core%20S%26P%20500%22)%20AND%20(ETF%20OR%20tracker%20OR%20fund%20OR%20index%20OR%20holdings%20OR%20allocation))%20-football%20-soccer%20when:7d&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=%22Core%20MSCI%20Europe%20EUR%20(Acc)%22%20OR%20%22iShares%20Core%20MSCI%20Europe%20UCITS%20ETF%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
     enabled: true
 
-  - id: fund_cac40
-    name: Core CAC 40 EUR (Acc)
+  - id: fund_msci_europe_index
+    name: MSCI Europe - index
     kind: rss
     category: portfolio_funds
-    quality: 85
+    quality: 82
+    language: en
+    url: "https://news.google.com/rss/search?q=%22MSCI%20Europe%22%20ETF%20OR%20index%20OR%20tracker%20when:10d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =========================
+  # S&P 500
+  # =========================
+  - id: fund_sp500_exact
+    name: Core S&P 500 USD (Acc) - exact
+    kind: rss
+    category: portfolio_funds
+    quality: 88
+    language: en
+    url: "https://news.google.com/rss/search?q=%22Core%20S%26P%20500%20USD%20(Acc)%22%20OR%20%22iShares%20Core%20S%26P%20500%20UCITS%20ETF%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  - id: fund_sp500_index
+    name: S&P 500 - index
+    kind: rss
+    category: portfolio_funds
+    quality: 84
+    language: en
+    url: "https://news.google.com/rss/search?q=%22S%26P%20500%22%20ETF%20OR%20index%20OR%20tracker%20when:10d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =========================
+  # CAC 40
+  # =========================
+  - id: fund_cac40_exact
+    name: Core CAC 40 EUR (Acc) - exact
+    kind: rss
+    category: portfolio_funds
+    quality: 87
     language: fr
-    url: "https://news.google.com/rss/search?q=((%22CAC%2040%22%20OR%20%22Core%20CAC%2040%22)%20AND%20(ETF%20OR%20tracker%20OR%20fonds%20OR%20indice%20OR%20composition%20OR%20allocation))%20-football%20-rugby%20-sport%20when:7d&hl=fr&gl=FR&ceid=FR:fr"
+    url: "https://news.google.com/rss/search?q=%22Core%20CAC%2040%20EUR%20(Acc)%22%20OR%20%22iShares%20CAC%2040%20UCITS%20ETF%22%20when:14d&hl=fr&gl=FR&ceid=FR:fr"
     enabled: true
 
-  - id: fund_emerging_markets
-    name: MSCI Emerging Markets EUR
+  - id: fund_cac40_index
+    name: CAC 40 - index
+    kind: rss
+    category: portfolio_funds
+    quality: 83
+    language: fr
+    url: "https://news.google.com/rss/search?q=%22CAC%2040%22%20ETF%20OR%20tracker%20OR%20indice%20when:10d&hl=fr&gl=FR&ceid=FR:fr"
+    enabled: true
+
+  # =========================
+  # EMERGING MARKETS
+  # =========================
+  - id: fund_em_exact
+    name: MSCI Emerging Markets EUR - exact
+    kind: rss
+    category: portfolio_funds
+    quality: 87
+    language: en
+    url: "https://news.google.com/rss/search?q=%22MSCI%20Emerging%20Markets%20EUR%22%20OR%20%22MSCI%20EM%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  - id: fund_em_index
+    name: MSCI Emerging Markets - index
+    kind: rss
+    category: portfolio_funds
+    quality: 82
+    language: en
+    url: "https://news.google.com/rss/search?q=%22MSCI%20Emerging%20Markets%22%20ETF%20OR%20tracker%20OR%20index%20when:10d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  - id: fund_em_theme
+    name: Emerging Markets equities
+    kind: rss
+    category: portfolio_funds
+    quality: 78
+    language: en
+    url: "https://news.google.com/rss/search?q=%22emerging%20markets%20equities%22%20ETF%20OR%20fund%20when:10d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =========================
+  # GOLD PRODUCERS
+  # =========================
+  - id: fund_gold_producers_exact
+    name: Gold Producers USD (Acc) - exact
+    kind: rss
+    category: portfolio_funds
+    quality: 86
+    language: en
+    url: "https://news.google.com/rss/search?q=%22Gold%20Producers%20USD%20(Acc)%22%20OR%20%22Gold%20Producers%20UCITS%20ETF%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  - id: fund_gold_producers_theme
+    name: Gold producers theme
+    kind: rss
+    category: portfolio_funds
+    quality: 82
+    language: en
+    url: "https://news.google.com/rss/search?q=%22gold%20producers%22%20ETF%20OR%20fund%20OR%20miners%20when:10d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =========================
+  # GOLD MINERS
+  # =========================
+  - id: fund_gold_miners_exact
+    name: Gold Miners USD (Acc) - exact
+    kind: rss
+    category: portfolio_funds
+    quality: 86
+    language: en
+    url: "https://news.google.com/rss/search?q=%22Gold%20Miners%20USD%20(Acc)%22%20OR%20%22Gold%20Miners%20UCITS%20ETF%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  - id: fund_gold_miners_theme
+    name: Gold miners theme
+    kind: rss
+    category: portfolio_funds
+    quality: 82
+    language: en
+    url: "https://news.google.com/rss/search?q=%22gold%20miners%22%20ETF%20OR%20fund%20OR%20mining%20when:10d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =========================
+  # WORLD WATER
+  # =========================
+  - id: fund_world_water_exact
+    name: PEA World Water EUR (Acc) - exact
     kind: rss
     category: portfolio_funds
     quality: 85
     language: en
-    url: "https://news.google.com/rss/search?q=((%22MSCI%20Emerging%20Markets%22)%20AND%20(ETF%20OR%20tracker%20OR%20fund%20OR%20index%20OR%20holdings%20OR%20allocation))%20-football%20-soccer%20when:7d&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=%22PEA%20World%20Water%20EUR%20(Acc)%22%20OR%20%22World%20Water%20ETF%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
     enabled: true
 
-  - id: fund_gold_producers
-    name: Gold Producers USD (Acc)
+  - id: fund_world_water_theme
+    name: Water equities theme
+    kind: rss
+    category: portfolio_funds
+    quality: 80
+    language: en
+    url: "https://news.google.com/rss/search?q=%22water%20utilities%22%20ETF%20OR%20fund%20OR%20%22water%20stocks%22%20when:10d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =========================
+  # QUALITY DIVIDEND
+  # =========================
+  - id: fund_quality_dividend_exact
+    name: EURO STOXX Quality Dividend - exact
     kind: rss
     category: portfolio_funds
     quality: 84
     language: en
-    url: "https://news.google.com/rss/search?q=((%22Gold%20Producers%22%20OR%20%22Gold%20Producers%20ETF%22)%20AND%20(ETF%20OR%20fund%20OR%20miners%20OR%20gold%20stocks%20OR%20holdings))%20-football%20-soccer%20when:7d&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=%22EURO%20STOXX%20Quality%20Dividend%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
     enabled: true
 
-  - id: fund_gold_miners
-    name: Gold Miners USD (Acc)
+  - id: fund_quality_dividend_theme
+    name: Europe quality dividend
     kind: rss
     category: portfolio_funds
-    quality: 85
+    quality: 79
     language: en
-    url: "https://news.google.com/rss/search?q=((%22Gold%20Miners%22%20OR%20%22Gold%20Miners%20ETF%22)%20AND%20(ETF%20OR%20fund%20OR%20miners%20OR%20gold%20stocks%20OR%20holdings))%20-football%20-soccer%20when:7d&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=%22quality%20dividend%20Europe%22%20ETF%20OR%20fund%20when:10d&hl=en-US&gl=US&ceid=US:en"
     enabled: true
 
-  - id: fund_world_water
-    name: PEA World Water EUR (Acc)
-    kind: rss
-    category: portfolio_funds
-    quality: 83
-    language: en
-    url: "https://news.google.com/rss/search?q=((%22World%20Water%22%20OR%20%22Water%20ETF%22%20OR%20%22Water%20Fund%22)%20AND%20(ETF%20OR%20fund%20OR%20utilities%20OR%20water%20stocks%20OR%20holdings))%20-football%20-soccer%20when:7d&hl=en-US&gl=US&ceid=US:en"
-    enabled: true
-
-  - id: fund_quality_dividend
-    name: EURO STOXX Quality Dividend
-    kind: rss
-    category: portfolio_funds
-    quality: 83
-    language: en
-    url: "https://news.google.com/rss/search?q=((%22EURO%20STOXX%20Quality%20Dividend%22%20OR%20%22Quality%20Dividend%20Europe%22)%20AND%20(ETF%20OR%20fund%20OR%20dividend%20OR%20yield%20OR%20holdings))%20-football%20-soccer%20when:7d&hl=en-US&gl=US&ceid=US:en"
-    enabled: true
-
-  - id: fund_dividend_aristocrats
-    name: S&P Euro Dividend Aristocrats
+  # =========================
+  # EURO DIVIDEND ARISTOCRATS
+  # =========================
+  - id: fund_euro_dividend_aristo_exact
+    name: S&P Euro Dividend Aristocrats - exact
     kind: rss
     category: portfolio_funds
     quality: 84
     language: en
-    url: "https://news.google.com/rss/search?q=((%22S%26P%20Euro%20Dividend%20Aristocrats%22%20OR%20%22Euro%20Dividend%20Aristocrats%22)%20AND%20(ETF%20OR%20fund%20OR%20dividend%20OR%20yield%20OR%20holdings))%20-football%20-soccer%20when:7d&hl=en-US&gl=US&ceid=US:en"
+    url: "https://news.google.com/rss/search?q=%22S%26P%20Euro%20Dividend%20Aristocrats%22%20when:14d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  - id: fund_euro_dividend_aristo_theme
+    name: Euro dividend aristocrats theme
+    kind: rss
+    category: portfolio_funds
+    quality: 79
+    language: en
+    url: "https://news.google.com/rss/search?q=%22Euro%20Dividend%20Aristocrats%22%20ETF%20OR%20fund%20when:10d&hl=en-US&gl=US&ceid=US:en"
     enabled: true
 
 exclude_keywords:
@@ -118,13 +247,13 @@ exclude_keywords:
 
 boost_keywords:
   - etf
-  - fund
+  - ucits
   - tracker
-  - holdings
-  - allocation
   - index
-  - composition
   - dividend
   - yield
   - miners
-  - gold
+  - water
+  - msci
+  - s&p
+  - cac 40
