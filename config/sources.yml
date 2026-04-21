@@ -1,7 +1,7 @@
 settings:
   freshness_hours: 72
-  max_articles_per_day: 18
-  top_n: 5
+  max_articles_per_day: 24
+  top_n: 8
   min_score: 45
   timeout_seconds: 20
   history_file: data/seen_articles.jsonl
@@ -10,9 +10,9 @@ settings:
   base_url: ""
 
 sources:
-  # -----------------------------
-  # RÉGULATION / SUPERVISION
-  # -----------------------------
+  # =============================
+  # MACRO / RÉGULATION / POLITIQUE
+  # =============================
   - id: eba
     name: European Banking Authority
     kind: rss
@@ -23,7 +23,7 @@ sources:
     enabled: true
 
   - id: ecb_press
-    name: ECB - Press / speeches / interviews
+    name: ECB - Press
     kind: rss
     category: finance_markets
     quality: 95
@@ -31,23 +31,68 @@ sources:
     url: https://www.ecb.europa.eu/rss/press.html
     enabled: true
 
-  - id: esrb_press
-    name: ESRB - Press releases / speeches / interviews
-    kind: rss
-    category: regulation_institutions
-    quality: 94
+  - id: eiopa_media
+    name: EIOPA Media
+    kind: scrape
+    category: assurance
+    quality: 96
     language: en
-    url: https://www.esrb.europa.eu/rss/press.xml
+    url: https://www.eiopa.europa.eu/media_en
     enabled: true
+    require_url_contains:
+      - /20
+      - _en
+    item_selectors:
+      - main article
+      - .view-content .views-row
+      - .node--type-news
+      - article
+    title_selectors:
+      - h3 a
+      - h2 a
+      - a
+    link_selectors:
+      - h3 a
+      - h2 a
+      - a
+    date_selectors:
+      - time
+      - .date
+      - .field--name-field-publication-date
+      - span
+    summary_selectors:
+      - p
 
-  - id: bis_press
-    name: BIS - Press releases
-    kind: rss
-    category: finance_markets
-    quality: 92
+  - id: esma_news
+    name: ESMA News
+    kind: scrape
+    category: regulation_institutions
+    quality: 95
     language: en
-    url: https://www.bis.org/doclist/all_pressrels.rss
+    url: https://www.esma.europa.eu/press-news/esma-news
     enabled: true
+    require_url_contains:
+      - /press-news/esma-news/
+    item_selectors:
+      - main article
+      - .view-content .views-row
+      - .search-results__item
+      - article
+    title_selectors:
+      - h3 a
+      - h2 a
+      - a
+    link_selectors:
+      - h3 a
+      - h2 a
+      - a
+    date_selectors:
+      - time
+      - .date-display-single
+      - .field--name-field-publication-date
+      - .date
+    summary_selectors:
+      - p
 
   - id: amf_regulation_fr
     name: AMF - Réglementation
@@ -59,7 +104,7 @@ sources:
     enabled: true
 
   - id: amf_communiques_fr
-    name: AMF - Communiqués / sanctions
+    name: AMF - Communiqués
     kind: rss
     category: regulation_institutions
     quality: 94
@@ -97,144 +142,110 @@ sources:
     summary_selectors:
       - p
 
-  - id: esma_news
-    name: ESMA News
-    kind: scrape
-    category: regulation_institutions
-    quality: 95
-    language: en
-    url: https://www.esma.europa.eu/press-news/esma-news
-    enabled: true
-    require_url_contains:
-      - /press-news/esma-news/
-    item_selectors:
-      - main article
-      - .view-content .views-row
-      - .search-results__item
-      - article
-    title_selectors:
-      - h3 a
-      - h2 a
-      - a
-    link_selectors:
-      - h3 a
-      - h2 a
-      - a
-    date_selectors:
-      - time
-      - .date-display-single
-      - .field--name-field-publication-date
-      - .date
-    summary_selectors:
-      - p
-
-  - id: eiopa_media
-    name: EIOPA Media
-    kind: scrape
-    category: assurance
-    quality: 96
-    language: en
-    url: https://www.eiopa.europa.eu/media_en
-    enabled: true
-    require_url_contains:
-      - /20
-      - _en
-    item_selectors:
-      - main article
-      - .view-content .views-row
-      - .node--type-news
-      - article
-    title_selectors:
-      - h3 a
-      - h2 a
-      - a
-    link_selectors:
-      - h3 a
-      - h2 a
-      - a
-    date_selectors:
-      - time
-      - .date
-      - .field--name-field-publication-date
-      - span
-    summary_selectors:
-      - p
-
-  # -----------------------------
-  # GÉOPOLITIQUE / POLITIQUE À IMPACT
-  # -----------------------------
-  - id: consilium_press
-    name: Council of the EU - Press releases
-    kind: rss
-    category: politique_europeenne
-    quality: 93
-    language: en
-    url: https://www.consilium.europa.eu/en/rss/pressreleases.ashx
-    enabled: true
-
-  - id: ec_trade_news
-    name: European Commission - EU Trade News
+  - id: google_geopolitique_finance_fr
+    name: Google News - géopolitique finance FR
     kind: rss
     category: geopolitique_major
-    quality: 91
-    language: en
-    url: https://policy.trade.ec.europa.eu/node/2/rss_en
-    enabled: true
-
-  - id: europarl_press
-    name: European Parliament - Press releases
-    kind: rss
-    category: politique_europeenne
-    quality: 87
-    language: en
-    url: https://www.europarl.europa.eu/rss/doc/press-releases/en.xml
-    enabled: true
-
-  - id: europarl_external
-    name: European Parliament - External relations
-    kind: rss
-    category: geopolitique_major
-    quality: 88
-    language: en
-    url: https://www.europarl.europa.eu/rss/topic/903/en.xml
-    enabled: true
-
-  - id: europarl_econ_monetary
-    name: European Parliament - Economic and monetary affairs
-    kind: rss
-    category: politique_europeenne
-    quality: 89
-    language: en
-    url: https://www.europarl.europa.eu/rss/topic/907/en.xml
-    enabled: true
-
-  # -----------------------------
-  # GOOGLE NEWS = SEULEMENT EN COMPLÉMENT,
-  # AVEC REQUÊTES ULTRA-CIBLÉES
-  # -----------------------------
-  - id: google_assurance_sector_fr
-    name: Google News - assurance sectorielle FR
-    kind: rss
-    category: assurance
-    quality: 76
-    language: fr
-    url: "https://news.google.com/rss/search?q=((assurance%20OR%20assureur%20OR%20assureurs%20OR%20r%C3%A9assurance%20OR%20r%C3%A9assureur%20OR%20insurtech%20OR%20%22assurance-vie%22%20OR%20%22Solvabilit%C3%A9%20II%22)%20AND%20(prime%20OR%20sinistre%20OR%20mutuelle%20OR%20courtage%20OR%20supervision%20OR%20r%C3%A9glementation%20OR%20solvabilit%C3%A9))%20-football%20-rugby%20-basket%20-tennis%20-ligue%20-match%20-PSG%20-OM%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
-    enabled: true
-
-  - id: google_regtech_lcbft_dora_fr
-    name: Google News - DORA / LCB-FT / conformité FR
-    kind: rss
-    category: regulation_institutions
     quality: 78
     language: fr
-    url: "https://news.google.com/rss/search?q=((DORA%20OR%20LCB-FT%20OR%20AML%20OR%20KYC%20OR%20%22lutte%20contre%20le%20blanchiment%22%20OR%20%22sanctions%20financi%C3%A8res%22%20OR%20%22cybers%C3%A9curit%C3%A9%20financi%C3%A8re%22)%20AND%20(banque%20OR%20assurance%20OR%20finance%20OR%20assureur%20OR%20r%C3%A9gulateur))%20-football%20-rugby%20-sport%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
+    url: "https://news.google.com/rss/search?q=((sanctions%20OR%20%22droits%20de%20douane%22%20OR%20p%C3%A9trole%20OR%20gaz%20OR%20%C3%A9nergie%20OR%20%22transport%20maritime%22%20OR%20commerce)%20AND%20(finance%20OR%20assurance%20OR%20march%C3%A9s%20OR%20banque%20OR%20r%C3%A9assurance))%20-football%20-rugby%20-sport%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
     enabled: true
 
-  - id: google_geopolitique_finance_fr
-    name: Google News - géopolitique à impact finance FR
+  # =============================
+  # PORTEFEUILLE - ACTIONS US
+  # =============================
+  - id: portfolio_us_equities
+    name: Portefeuille - NVIDIA / Take-Two
+    kind: rss
+    category: portfolio_equities
+    quality: 82
+    language: en
+    url: "https://news.google.com/rss/search?q=((%22NVIDIA%22%20OR%20NVDA%20OR%20%22Take-Two%20Interactive%22%20OR%20TTWO)%20AND%20(earnings%20OR%20results%20OR%20guidance%20OR%20AI%20OR%20gaming%20OR%20semiconductors%20OR%20stock%20OR%20market))%20-NFL%20-NBA%20-football%20-soccer%20when:5d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =============================
+  # PORTEFEUILLE - ACTIONS EUROPE
+  # =============================
+  - id: portfolio_europe_equities
+    name: Portefeuille - Subsea 7 / Bouygues / AXA
+    kind: rss
+    category: portfolio_equities
+    quality: 82
+    language: fr
+    url: "https://news.google.com/rss/search?q=((%22Subsea%207%22%20OR%20Bouygues%20OR%20AXA)%20AND%20(results%20OR%20r%C3%A9sultats%20OR%20guidance%20OR%20dividende%20OR%20contrat%20OR%20assurance%20OR%20construction%20OR%20offshore%20OR%20%C3%A9nergie%20OR%20march%C3%A9))%20-football%20-rugby%20-sport%20when:5d&hl=fr&gl=FR&ceid=FR:fr"
+    enabled: true
+
+  # =============================
+  # PORTEFEUILLE - ETF MONDE / INDICES
+  # =============================
+  - id: portfolio_world_index_etfs
+    name: Portefeuille - MSCI World / Europe / S&P500 / CAC40 / EM
+    kind: rss
+    category: portfolio_etfs
+    quality: 80
+    language: fr
+    url: "https://news.google.com/rss/search?q=((%22MSCI%20World%22%20OR%20%22MSCI%20Europe%22%20OR%20%22S%26P%20500%22%20OR%20%22CAC%2040%22%20OR%20%22Emerging%20Markets%22)%20AND%20(ETF%20OR%20tracker%20OR%20indices%20OR%20march%C3%A9s%20OR%20allocation%20OR%20valorisation%20OR%20actions))%20-football%20-rugby%20-sport%20when:5d&hl=fr&gl=FR&ceid=FR:fr"
+    enabled: true
+
+  # =============================
+  # PORTEFEUILLE - OR / MINIÈRES
+  # =============================
+  - id: portfolio_gold_equities
+    name: Portefeuille - Gold Producers / Gold Miners
+    kind: rss
+    category: portfolio_thematic
+    quality: 81
+    language: en
+    url: "https://news.google.com/rss/search?q=((%22gold%20miners%22%20OR%20%22gold%20producers%22%20OR%20%22gold%20mining%20stocks%22)%20AND%20(gold%20price%20OR%20ETF%20OR%20miners%20OR%20inflation%20OR%20rates%20OR%20Fed%20OR%20market))%20-football%20-soccer%20when:5d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =============================
+  # PORTEFEUILLE - EAU / DIVIDENDES
+  # =============================
+  - id: portfolio_water_dividend
+    name: Portefeuille - Water / Quality Dividend / Dividend Aristocrats
+    kind: rss
+    category: portfolio_thematic
+    quality: 79
+    language: en
+    url: "https://news.google.com/rss/search?q=((%22World%20Water%22%20OR%20%22Quality%20Dividend%22%20OR%20%22Dividend%20Aristocrats%22%20OR%20%22Euro%20Dividend%20Aristocrats%22)%20AND%20(ETF%20OR%20dividend%20OR%20utilities%20OR%20defensive%20OR%20yield%20OR%20market))%20-football%20-soccer%20when:5d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  # =============================
+  # MACRO DIRECTEMENT UTILE À VOS POSITIONS
+  # =============================
+  - id: macro_ai_semiconductors
+    name: Macro - IA / semi-conducteurs
+    kind: rss
+    category: finance_markets
+    quality: 77
+    language: en
+    url: "https://news.google.com/rss/search?q=((AI%20OR%20%22artificial%20intelligence%22%20OR%20semiconductors%20OR%20GPU)%20AND%20(NVIDIA%20OR%20datacenter%20OR%20chip%20stocks))%20when:3d&hl=en-US&gl=US&ceid=US:en"
+    enabled: true
+
+  - id: macro_gold_rates
+    name: Macro - or / taux / inflation
+    kind: rss
+    category: finance_markets
+    quality: 78
+    language: fr
+    url: "https://news.google.com/rss/search?q=((or%20OR%20gold)%20AND%20(taux%20OR%20Fed%20OR%20inflation%20OR%20dollar%20OR%20banques%20centrales))%20-football%20-rugby%20-sport%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
+    enabled: true
+
+  - id: macro_insurance_europe
+    name: Macro - assurance Europe
+    kind: rss
+    category: assurance
+    quality: 79
+    language: fr
+    url: "https://news.google.com/rss/search?q=((assurance%20OR%20assureur%20OR%20r%C3%A9assurance)%20AND%20(Europe%20OR%20France%20OR%20Solvabilit%C3%A9%20II%20OR%20tarification%20OR%20catastrophes%20OR%20AXA))%20-football%20-rugby%20-sport%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
+    enabled: true
+
+  - id: macro_energy_offshore
+    name: Macro - énergie / offshore
     kind: rss
     category: geopolitique_major
     quality: 77
-    language: fr
-    url: "https://news.google.com/rss/search?q=((sanctions%20OR%20%22droits%20de%20douane%22%20OR%20p%C3%A9trole%20OR%20gaz%20OR%20%C3%A9nergie%20OR%20%22transport%20maritime%22%20OR%20%22cha%C3%AEne%20d%27approvisionnement%22%20OR%20commerce)%20AND%20(finance%20OR%20assurance%20OR%20march%C3%A9s%20OR%20inflation%20OR%20r%C3%A9assurance%20OR%20banque))%20-football%20-rugby%20-sport%20when:3d&hl=fr&gl=FR&ceid=FR:fr"
+    language: en
+    url: "https://news.google.com/rss/search?q=((offshore%20OR%20subsea%20OR%20oil%20services%20OR%20energy%20infrastructure)%20AND%20(contract%20OR%20capex%20OR%20project%20OR%20oil%20price%20OR%20gas%20price))%20when:3d&hl=en-US&gl=US&ceid=US:en"
     enabled: true
