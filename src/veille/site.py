@@ -42,7 +42,7 @@ def build_site(run_date: str, articles: list[dict], site_dir: Path, base_url: st
     archive_entries = [by_date[d] for d in ordered_dates]
 
     (site_dir / "index.html").write_text(
-        render_day_page(run_date, articles, title=f"Veille métier — {run_date}", home=True),
+        render_day_page(run_date, articles, title=f"Veille finance — {run_date}", home=True),
         encoding="utf-8",
     )
     (site_dir / "archives.html").write_text(render_archives_page(archive_entries), encoding="utf-8")
@@ -172,7 +172,7 @@ def render_rss(run_date: str, articles: list[dict], base_url: str = "") -> str:
     return f"""<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-  <title>Veille métier du {escape(run_date)}</title>
+  <title>Veille finance du {escape(run_date)}</title>
   <link>{escape(base + '/index.html' if base else '')}</link>
   <description>Veille quotidienne assurance, finance, banque et régulation.</description>
   {''.join(items)}
