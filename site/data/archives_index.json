@@ -217,8 +217,14 @@
   },
   "2026-04-21": {
     "date": "2026-04-21",
-    "count": 0,
-    "top_titles": [],
+    "count": 24,
+    "top_titles": [
+      "ESMA launches a call for evidence on restricted subscription and private credit ratings 16/04/2026 The European Securities and Markets Authority (ESMA), the EU’s financial markets regulator",
+      "New investment funds drive reduction in costs to investors 03/03/2026 The European Securities and Markets Authority (ESMA), the EU financial markets regul",
+      "Shipping Disruptions in Strait of Hormuz Reshape Global Energy Markets - Discovery Alert",
+      "Oil Prices Up 1% as Iran Crisis Disrupts Middle East Supply - EnergyNow",
+      "ESMA clarifies expectations in the run-up to the launch of EU’s Consolidated Tapes 01/04/2026 The European Securities and Markets Authority (ESMA), the EU’s financia"
+    ],
     "path": "archive/2026-04-21.html"
   }
 }
