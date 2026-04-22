@@ -1,9 +1,9 @@
-name: Daily veille
+name: Finance
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '00 08 * * 1-6'
+    - cron: '00 11 * * 1-6'
       timezone: 'Europe/Paris'
 
 concurrency:
