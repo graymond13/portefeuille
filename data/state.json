@@ -1,10 +1,10 @@
 {
-  "last_run_at": "2026-05-25T12:29:45.242883+00:00",
-  "last_run_date": "2026-05-25",
-  "selected_count": 10,
-  "history_count": 447,
-  "fetched_candidates": 454,
-  "normalized_candidates": 325,
-  "dropped_as_already_seen": 69,
+  "last_run_at": "2026-05-28T12:25:30.638676+00:00",
+  "last_run_date": "2026-05-28",
+  "selected_count": 26,
+  "history_count": 473,
+  "fetched_candidates": 422,
+  "normalized_candidates": 273,
+  "dropped_as_already_seen": 38,
   "source_count": 21
 }
